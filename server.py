@@ -36,16 +36,53 @@ while SERVER_STATUS == 0:
                     break
                 elif which_game == 2:
                     print("STARTING GUESS NUMBER") ############################
-                    game = GuessNumber()
-                    if data_arr[1] == 1:
-                        SERVER_STATUS = 1
-                    else:
-                        SERVER_STATUS = 2
-                    break
+                    gameN = GuessNumber()
+                    gameN.set_name(data_arr[2])
+                    SERVER_STATUS = 1
     print("SERVER_STATUS: ",SERVER_STATUS)
     while SERVER_STATUS == 2:
         raise NotImplementedError #NOT IMPLEMENTED YET
     while SERVER_STATUS == 1:
+        if which_game == 2: #### GuessNumber
+            while 1:
+                data = conn.recv(4096)
+                if data:
+                    data_arr = pickle.loads(data)
+                    print("RECEIVED: ", data_arr)
+                    if data_arr[0] == 2:
+                        conn.send(pickle.dumps([2, gameN.getting_input_s(data_arr[1])]))
+                        try:
+                            gameN.getting_input_s(data_arr[1])
+                            if gameN.in_num > gameN.random_number:
+                                gameN.iter += 1
+                                message = "too high!"
+                                print(message)
+                                conn.send(pickle.dumps([1, message]))
+                            elif gameN.in_num < gameN.random_number:
+                                gameN.iter += 1
+                                message = "too low!"
+                                print(message)
+                                conn.send(pickle.dumps([1, message]))
+                            else:
+                                gameN.iter += 1
+                                message = "You guessed in ", gameN.iter, "guesses!"
+                                print(message)
+                                conn.send(pickle.dumps([2, message]))
+                                break
+                        except ValueError or TypeError:
+                            gameN.quit = False
+                            message = 'Wrong value! Put an integer or just type "quit" '
+                            print(message)
+                            conn.send(pickle.dumps([3, message]))
+                    elif data_arr[0] == 4:
+                        # status of the match
+                        status = gameN.quit
+                        if status == True:
+                            print("game is ended")
+                        conn.send(pickle.dumps([4, status]))
+
+
+
         if which_game == 1: #### TICTACTOE
             while 1:
                 data = conn.recv(4096)

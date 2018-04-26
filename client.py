@@ -4,15 +4,20 @@
 #
 from TicTacToeClientConnection import TicTacToeClientConnection
 from tabulate import tabulate
+from GuessNumberConnection import GuessNumberConnection
+import socket, pickle
 
 HOST = 'localhost'
 PORT = 10009
 
-connection = TicTacToeClientConnection(HOST,PORT)
 playername = input("insert your name: ")
-number_of_player = int(input("Singleplayer [1] or Multiplayer [2]: "))
 which_game = int(input("TicTacToe [1] or GuessNumber [2]: "))
-
+if which_game == 1:
+    number_of_player = int(input("Singleplayer [1] or Multiplayer [2]: "))
+    connection = TicTacToeClientConnection(HOST, PORT)
+else:
+    number_of_player = 1
+    connection = GuessNumberConnection(HOST, PORT)
 if connection.connect()==1:
     print("Connected succesfully")
     connection.initial_settings(number_of_player,playername,which_game)
@@ -43,7 +48,29 @@ if connection.connect()==1:
         elif number_of_player == 2:
             raise NotImplementedError  # NOT IMPLEMENTED YET
     elif which_game == 2:
-        raise NotImplementedError  # NOT IMPLEMENTED YET
+        print("Welcome!, I will take an integer from range of 0 to 100. Try to guess this number!")
+        while 1:
+            inp = input('Type your guess, or type "quit" to quit\n')
+            connection.give_input(inp)
+            response = connection.get_response()
+            print(response)
+            if response[0] == 1:
+                print(response[1])
+                inp = input('Type your guess, or type "quit" to quit\n')
+                connection.give_input(inp)
+            elif response[0] == 2:
+                print(response[1])
+                break
+
+            elif response[0] == 3:
+                print(response[1])
+                inp = input('\n')
+                connection.give_input(inp)
+            else:
+                print(response)
+                break
+
+        connection.close_connection()
+        #raise NotImplementedError  # NOT IMPLEMENTED YET
 
 
-#connection.close_connection()

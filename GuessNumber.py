@@ -7,6 +7,10 @@ class GuessNumber:
         self.iter = 0
         self.in_num = -1
         self.quit = False
+        self.name = "No name"
+
+    def set_name(self, name):
+        self.name = name
 
     def getting_input(self, m):
         try:
@@ -20,7 +24,21 @@ class GuessNumber:
             print('Wrong value! Put an integer or just type "quit" ')
             self.getting_input(input('Type your guess, or type "quit" to quit\n'))
 
-    def play(self):
+    def getting_input_s(self, m):
+        if "quit" == m.casefold():
+            self.quit = True
+        else:
+            self.quit = False
+            self.in_num = int(m)
+
+    def compare(self):
+        if self.in_num>self.random_number:
+            return 1
+        elif self.in_num>self.random_number:
+            return -1
+        else: return 0
+
+    def play(self, inp):
         print("Welcome! I will take an integer from range of 0 to 100. Try to guess this number!")
         while True:
             self.getting_input(input('Type your guess, or type "quit" to quit\n'))
