@@ -1,6 +1,7 @@
 # CHRISTIAN RIVA
 # EWA GIERLACH
 #
+#
 from TicTacToeClientConnection import TicTacToeClientConnection
 from tabulate import tabulate
 
@@ -41,3 +42,8 @@ if connection.connect()==1:
             connection.close_connection()
         elif number_of_player == 2:
             raise NotImplementedError  # NOT IMPLEMENTED YET
+    elif which_game == 2:
+        raise NotImplementedError  # NOT IMPLEMENTED YET
+
+
+#connection.close_connection()
