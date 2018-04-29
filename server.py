@@ -17,74 +17,37 @@ while SERVER_STATUS == 0:
     print('Connected by', addr)
     conn.send(pickle.dumps(1))
 
-    data = conn.recv(4096)
-    if data:
-        #conn.send(data)
-        data_arr = pickle.loads(data)
-        print("RECEIVED: ", repr(data_arr))
-        if data_arr[0] == 1:
-            #GAME INITIALIZATION:
-            which_game = data_arr[3]
-            if which_game == 1:
-                print("STARTING TIC TAC TOE") #############################
-                game = TicTacToe()
-                game.set_name_player1(data_arr[2])
-                if data_arr[1] == 1:
-                    SERVER_STATUS = 1
-                else:
-                    SERVER_STATUS = 2
-                break
-            elif which_game == 2:
-                print("STARTING GUESS NUMBER") ############################
-                gameN = GuessNumber()
-                gameN.set_name(data_arr[2])
-                SERVER_STATUS = 1
+    while 1:
+        data = conn.recv(4096)
+        if data:
+            #conn.send(data)
+            data_arr = pickle.loads(data)
+            print("RECEIVED: ", repr(data_arr))
+            if data_arr[0] == 1:
+                #GAME INITIALIZATION:
+                which_game = data_arr[3]
+                if which_game == 1:
+                    print("STARTING TIC TAC TOE") #############################
+                    game = TicTacToe()
+                    game.set_name_player1(data_arr[2])
+                    if data_arr[1] == 1:
+                        SERVER_STATUS = 1
+                    else:
+                        SERVER_STATUS = 2
+                    break
+                elif which_game == 2:
+                    print("STARTING GUESS NUMBER") ############################
+                    gameN = GuessNumber()
+                    gameN.set_name(data_arr[2])
+                    if data_arr[1] == 1:
+                        SERVER_STATUS = 1
+                    else:
+                        SERVER_STATUS = 2
+                    break
     print("SERVER_STATUS: ",SERVER_STATUS)
     while SERVER_STATUS == 2:
         raise NotImplementedError #NOT IMPLEMENTED YET
     while SERVER_STATUS == 1:
-        if which_game == 2: #### GuessNumber
-            #print("SECRET: NUMBER =", gameN.random_number)
-            data = conn.recv(4096)
-            if data:
-                data_arr = pickle.loads(data)
-                print("RECEIVED: ", data_arr)
-                if data_arr[0] == 2:
-                    try:
-                        gameN.getting_input_s(data_arr[1])
-                        if gameN.in_num > gameN.random_number:
-                            gameN.iter += 1
-                            message = "too high!"
-                            print("Sending:",[1, message])
-                            conn.send(pickle.dumps([1, message]))
-                        elif gameN.in_num < gameN.random_number:
-                            gameN.iter += 1
-                            message = "too low!"
-                            print("Sending:",[1, message])
-                            conn.send(pickle.dumps([1, message]))
-                        else:
-                            gameN.iter += 1
-                            message = "You guessed in {} guesses!".format(gameN.iter)
-                            print("Sending:",[2, message])
-                            conn.send(pickle.dumps([2, message]))
-                            break
-                    except ValueError or TypeError:
-                        gameN.quit = False
-                        message = 'Wrong value! Put an integer or just type "quit" '
-                        print(message)
-                        conn.send(pickle.dumps([3, message]))
-                elif data_arr[0] == -1:
-                    # status of the match
-                    status = gameN.quit
-                    if status == True:
-                        print("game is ended")
-                    else:
-                        print("Game has been terminated")
-                    break
-                    #conn.send(pickle.dumps([4, status]))
-
-
-
         if which_game == 1: #### TICTACTOE
             while 1:
                 data = conn.recv(4096)
@@ -123,3 +86,39 @@ while SERVER_STATUS == 0:
                         break
                     elif which_game == 2:  #### GUESSNUMBER
                         raise NotImplementedError # NOT IMPLEMENTED YET
+        if which_game == 2: #### GuessNumber
+            #print("SECRET: NUMBER =", gameN.random_number)
+            data = conn.recv(4096)
+            if data:
+                data_arr = pickle.loads(data)
+                print("RECEIVED: ", data_arr)
+                if data_arr[0] == 2:
+                    try:
+                        gameN.getting_input_s(data_arr[1])
+                        if gameN.in_num > gameN.random_number:
+                            gameN.iter += 1
+                            message = "too high!"
+                            print("Sending:",[1, message])
+                            conn.send(pickle.dumps([1, message]))
+                        elif gameN.in_num < gameN.random_number:
+                            gameN.iter += 1
+                            message = "too low!"
+                            print("Sending:",[1, message])
+                            conn.send(pickle.dumps([1, message]))
+                        else:
+                            gameN.iter += 1
+                            message = "You guessed in {} guesses!".format(gameN.iter)
+                            print("Sending:",[2, message])
+                            conn.send(pickle.dumps([2, message]))
+                    except ValueError or TypeError:
+                        gameN.quit = False
+                        message = 'Wrong value! Put an integer or just type "quit" '
+                        print(message)
+                        conn.send(pickle.dumps([3, message]))
+                elif data_arr[0] == -1:
+                    # CLOSE CONNECTION
+                    print("CONNECTION CLOSED")
+                    SERVER_STATUS = 0
+                    conn.send(pickle.dumps([-1]))
+                    conn.close()
+

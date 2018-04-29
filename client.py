@@ -60,7 +60,6 @@ if connection.connect()==1:
                 break
             elif response[0] == 1:
                 print(response[1])
-
         connection.close_connection()
         #raise NotImplementedError  # NOT IMPLEMENTED YET
 
