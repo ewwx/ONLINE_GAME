@@ -51,24 +51,15 @@ if connection.connect()==1:
         print("Welcome!, I will take an integer from range of 0 to 100. Try to guess this number!")
         while 1:
             inp = input('Type your guess, or type "quit" to quit\n')
+            if inp == "quit":
+                break
             connection.give_input(inp)
             response = connection.get_response()
-            print(response)
-            if response[0] == 1:
-                print(response[1])
-                inp = input('Type your guess, or type "quit" to quit\n')
-                connection.give_input(inp)
-            elif response[0] == 2:
+            if response[0] == 2:
                 print(response[1])
                 break
-
-            elif response[0] == 3:
+            elif response[0] == 1:
                 print(response[1])
-                inp = input('\n')
-                connection.give_input(inp)
-            else:
-                print(response)
-                break
 
         connection.close_connection()
         #raise NotImplementedError  # NOT IMPLEMENTED YET

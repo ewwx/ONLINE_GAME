@@ -20,7 +20,7 @@ class GuessNumberConnection:
                 return 0
     def close_connection(self):
         self.s.send(pickle.dumps([-1]))
-        data_received = pickle.loads(self.s.recv(4096))
+        #data_received = pickle.loads(self.s.recv(4096))
         self.s.close()
 
     def initial_settings(self,number_of_player,my_name,which_game):
@@ -29,18 +29,18 @@ class GuessNumberConnection:
         self.s.send(arr)
 
     def give_input(self, taken_inp):
-        print(taken_inp)
         data_to_send = ([2, taken_inp])
         arr = pickle.dumps(data_to_send)
         self.s.send(arr)
-        data_received = pickle.loads(self.s.recv(4096))
-        print(data_received)
+        print("Sent:",data_to_send)
+        #data_received = pickle.loads(self.s.recv(4096))
+        #print(data_received)
 
 
 
     def get_response(self):
         data_received = pickle.loads(self.s.recv(4096))
-        print(data_received)
+        print("Response:",data_received)
         return data_received
 
     def status_of_the_match(self):

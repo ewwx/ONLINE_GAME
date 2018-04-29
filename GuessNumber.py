@@ -1,9 +1,8 @@
-import numpy as np
-
+import random
 
 class GuessNumber:
     def __init__(self):
-        self.random_number = np.random.randint(0, 100, dtype=int)
+        self.random_number = random.randint(0, 100)
         self.iter = 0
         self.in_num = -1
         self.quit = False
@@ -38,7 +37,7 @@ class GuessNumber:
             return -1
         else: return 0
 
-    def play(self, inp):
+    def play(self):
         print("Welcome! I will take an integer from range of 0 to 100. Try to guess this number!")
         while True:
             self.getting_input(input('Type your guess, or type "quit" to quit\n'))
