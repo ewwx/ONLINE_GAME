@@ -107,7 +107,7 @@ while SERVER_STATUS == 0:
                             conn.send(pickle.dumps([1, message]))
                         else:
                             gameN.iter += 1
-                            message = "You guessed in {} guesses!".format(gameN.iter)
+                            message = gameN.name +", you guessed in {} guesses!".format(gameN.iter)
                             print("Sending:",[2, message])
                             conn.send(pickle.dumps([2, message]))
                     except ValueError or TypeError:

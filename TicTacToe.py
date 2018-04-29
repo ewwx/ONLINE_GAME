@@ -8,8 +8,8 @@ import random
 
 
 class TicTacToe:
-    def __init__(self, ):
-        self.player1_name = "Player1"
+    def __init__(self, name = "Player1"):
+        self.player1_name = name
         self.player2_name = "Player2"
         self.player1_symbol = 'X'
         self.player2_symbol = 'O'

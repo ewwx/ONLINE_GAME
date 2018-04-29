@@ -60,3 +60,4 @@ class TicTacToeClientConnection:
     def computer_turn(self):
         self.s.send(pickle.dumps([7]))
         data_received = pickle.loads(self.s.recv(4096))
+
