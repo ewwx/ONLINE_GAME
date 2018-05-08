@@ -9,7 +9,7 @@ class TicTacToeClientConnection:
         self.PORT=PORT
 
     def connect(self):
-        self.s.connect(('localhost', 50007))
+        self.s.connect((self.HOST, self.PORT))
         while 1:
             data = self.s.recv(4096)
             if data:
@@ -44,6 +44,11 @@ class TicTacToeClientConnection:
 
     def status_of_the_match(self):
         self.s.send(pickle.dumps([4]))
+        data_received = pickle.loads(self.s.recv(4096))
+        return data_received[1]
+
+    def status_of_the_match2players(self,message):
+        self.s.send(pickle.dumps([42,message]))
         data_received = pickle.loads(self.s.recv(4096))
         return data_received[1]
 
