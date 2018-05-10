@@ -5,8 +5,10 @@ python:
 # command to install dependencies
 install:
   - pip install codecov
+  - pip install pytest
 
 script:
+  - pytest TestTicTacToe.py
   - coverage run TestTicTacToe.py
 
 after_success:
