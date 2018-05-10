@@ -5,8 +5,8 @@
 ## Getting Started
 It is game platform, which include:
 * TicTacToe game
-  ** for one player 
-  ** for two player
+  * for one player 
+  * for two player
 * GuessNumber
 Diplayed instructers on the client side:
 ```
