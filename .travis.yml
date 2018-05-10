@@ -3,11 +3,11 @@ python:
   - "3.6.3"
 
 install:
-  - pip install coverage
-  - pip install pytest
+   - pip install codecov
 
 script:
-  - pytest TestTicTacToe.py TestGuessNumber.py --cov=codecov
+  - pytest TestTicTacToe.py TestGuessNumber.py
+  - coverage run TestTicTacToe.py TestGuessNumber.py
 
 after_success:
   - codecov --token 3e76ae9f-0096-411b-b8bf-4672b7ed1aef
