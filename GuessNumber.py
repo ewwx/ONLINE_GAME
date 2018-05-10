@@ -13,7 +13,7 @@ class GuessNumber:
 
     def getting_input(self, m):
         try:
-            if "quit" == m.casefold():
+            if m == "quit":
                 self.quit = True
             else:
                 self.quit = False
@@ -33,7 +33,7 @@ class GuessNumber:
     def compare(self):
         if self.in_num>self.random_number:
             return 1
-        elif self.in_num>self.random_number:
+        elif self.in_num<self.random_number:
             return -1
         else: return 0
 
@@ -52,8 +52,9 @@ class GuessNumber:
                 print("to low")
             else:
                 self.iter += 1
+                mess = "You guessed in ", self.iter,  "guesses!"
                 print("You guessed in ", self.iter,  "guesses!")
-                break
+                return mess
         return 0
 
 

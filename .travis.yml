@@ -1,14 +1,16 @@
 language: python
 python:
   - "3.6.3"
-# command to install dependencies
--install:
+
+install:
   - pip install codecov
   - pip install pytest
--script:
-  - pytest TestTicTacToe.py 
+
+script:
   - coverage run TestTicTacToe.py
-  - nosetests TestTicTacToe.py -v — with-coverage
+  - pytest TestTicTacToe.py --cov
+  - pytest TestGuessNumber.py --cov
 
 after_success:
-- bash < (curl -s https://codecov.io/bash)
+  - codecovst
+  - bash < (curl -s https://codecov.io/bash)
