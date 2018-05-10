@@ -11,4 +11,4 @@ python:
   - nosetests TestTicTacToe.py -v — with-coverage
 
 after_success:
-- bash < (curl -s https://codecov.io/gh/ewwx/ONLINE_GAME)
+- bash < (curl -s https://codecov.io/bash)
