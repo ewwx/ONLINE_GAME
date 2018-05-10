@@ -7,8 +7,7 @@ install:
   - pip install pytest
 
 script:
-  - pytest TestTicTacToe.py
-  - pytest TestGuessNumber.py
+  - pytest TestTicTacToe.py TestGuessNumber.py --cov=codecov
 
 after_success:
-  - bash < (curl -s https://codecov.io/bash)
+  - codecov --token 3e76ae9f-0096-411b-b8bf-4672b7ed1aef
