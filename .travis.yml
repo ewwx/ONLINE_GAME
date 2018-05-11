@@ -6,8 +6,7 @@ install:
    - pip install codecov
 
 script:
-  - coverage run TestTicTacToe.py 
-  - coverage run TestGuessNumber.py
+  - coverage run TestTicTacToe.py TestGuessNumber.py
 
 after_success:
   - codecov --token 3e76ae9f-0096-411b-b8bf-4672b7ed1aef
