@@ -7,7 +7,7 @@ install:
 
 script:
   - coverage run -a TestTicTacToe.py 
-  - repeat coverage run -a TestGuessNumber.py
+  - coverage run -a TestGuessNumber.py
 
 after_success:
   - codecov --token 3e76ae9f-0096-411b-b8bf-4672b7ed1aef
