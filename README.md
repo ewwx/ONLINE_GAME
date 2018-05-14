@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/ewwx/ONLINE_GAME.svg?branch=master)](https://travis-ci.com/ewwx/ONLINE_GAME) [![codecov](https://codecov.io/gh/ewwx/ONLINE_GAME/branch/master/graph/badge.svg)](https://codecov.io/gh/ewwx/ONLINE_GAME)
-
+[![Coverage Status](https://coveralls.io/repos/github/ewwx/ONLINE_GAME/badge.svg?branch=master)](https://coveralls.io/github/ewwx/ONLINE_GAME?branch=master)
 # ONLINE_GAME
 
 ## Getting Started
