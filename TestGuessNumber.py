@@ -9,6 +9,10 @@ def test_right_name1():
     game.set_name(name)
     assert name == game.name
 
+def test_right_name2():
+    game = GuessNumber()
+    assert game.name=="No name"
+
 
 def test_getting_input1():
     game = GuessNumber()
